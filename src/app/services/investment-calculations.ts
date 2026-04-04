@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { UserInputData } from '../Models/user-input.modal';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { InvestmentValues } from '../Models/investment-values.modal';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InvestmentCalculations {
-  private investedResults = new Subject<InvestmentValues[]>();
+  private investedResults = new BehaviorSubject<InvestmentValues[]>([]);
   investedResults$ = this.investedResults.asObservable();
   calculateInvestmentResults(data: UserInputData) {
     const { initialInvestment, annualInvestment, expectedReturn, duration } = data;

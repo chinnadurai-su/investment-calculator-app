@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { InvestmentCalculations } from './../services/investment-calculations';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { UserInputData } from '../Models/user-input.modal';
 
 @Component({
   selector: 'app-user-input',
@@ -12,12 +14,22 @@ export class UserInput {
   annualContribution: Number = 0;
   annualReturn: Number = 5;
   investmentDuration: Number = 10;
+  private InvestmentCalculations = inject(InvestmentCalculations);
   calculateInvestment() {
-    console.log(
-      this.initialInvestment,
-      this.annualContribution,
-      this.annualReturn,
-      this.investmentDuration,
-    );
+    const data: UserInputData = {
+      initialInvestment: Number(this.initialInvestment),
+      annualInvestment: Number(this.annualContribution),
+      expectedReturn: Number(this.annualReturn),
+      duration: Number(this.investmentDuration),
+    };
+    this.InvestmentCalculations.calculateInvestmentResults(data);
+    this.resetValues();
+  }
+
+  resetValues() {
+    this.initialInvestment = 0;
+    this.annualContribution = 0;
+    this.annualReturn = 5;
+    this.investmentDuration = 10;
   }
 }
